@@ -4,7 +4,7 @@ import os
 APP = ['src/sms_forwarder/main.py']
 ICON_FILE = 'src/sms_forwarder/notification-icon.icns'
 ICON_PNG = 'src/sms_forwarder/notification-icon.png'
-DATA_FILES = [('Resources', [ICON_FILE, ICON_PNG, 'src/sms_forwarder/server.py', 'src/sms_forwarder/history.py'])]
+DATA_FILES = [('Resources', [ICON_FILE, ICON_PNG])]
 OPTIONS = {
     'argv_emulation': True,
     'plist': {
@@ -17,7 +17,7 @@ OPTIONS = {
         'CFBundleVersion': '1.0.1',
         'NSHumanReadableCopyright': '© 2026. All rights reserved.',
     },
-    'packages': ['rumps', 'pyperclip'],
+    'packages': ['rumps', 'pyperclip', 'sms_forwarder'],
     'resources': [
         'src/sms_forwarder/notification-icon.icns',
         'src/sms_forwarder/notification-icon.png',
@@ -26,6 +26,8 @@ OPTIONS = {
     ],
     'includes': ['rumps', 'pyperclip'],
     'excludes': ['unittest', 'test', 'setuptools'],
+    'bdist_base': 'build',
+    'dist_dir': 'dist',
 }
 
 setup(
@@ -33,11 +35,6 @@ setup(
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},
     setup_requires=['py2app'],
-    entry_points={
-        'console_scripts': [
-            'sms-forwarder = sms_forwarder.main:main'
-        ]
-    },
     packages=['sms_forwarder'],
     package_dir={'sms_forwarder': 'src/sms_forwarder'},
 )

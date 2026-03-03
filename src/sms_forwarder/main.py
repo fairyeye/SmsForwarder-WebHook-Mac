@@ -4,8 +4,14 @@ import rumps
 import os
 import re
 import pyperclip
-from .server import start_server
-from .history import HistoryManager
+import sys
+
+# 设置正确的工作路径
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# 直接使用绝对导入
+import server
+import history
 
 def extract_verification_code(content):
     if '验证码' not in content and '码' not in content:
@@ -33,8 +39,8 @@ class NotificationApp(rumps.App):
             super().__init__("", icon=icon_path)
         else:
             super().__init__("🔔")
-        
-        self.history_manager = HistoryManager(max_records=50)
+
+        self.history_manager = history.HistoryManager(max_records=50)
         
         self.menu = [
             rumps.MenuItem("刷新", callback=self.refresh_menu),
@@ -43,7 +49,7 @@ class NotificationApp(rumps.App):
             rumps.MenuItem("退出", callback=self.quit_app)
         ]
         
-        start_server(port=19999, callback=self.on_notification)
+        server.start_server(port=19999, callback=self.on_notification)
         print("应用已启动")
     
     def show_menu(self):

@@ -4,6 +4,7 @@ import threading
 
 APP_NAME_MAP = {
     'com.tencent.mm': '微信',
+    'com.tencent.androidqqmail': 'QQ邮箱',
     'com.tencent.mobileqq': 'QQ',
     'com.alibaba.android.rimet': '钉钉',
     'com.ss.android.ugc.aweme': '抖音',
@@ -15,8 +16,8 @@ APP_NAME_MAP = {
 notification_callback = None
 
 def get_app_name(package_name):
-    if package_name.isdigit() or package_name.startswith('+'):
-        return f'短信 {package_name}'
+    # if package_name.isdigit() or package_name.startswith('+'):
+    #     return f'短信 {package_name}'
     return APP_NAME_MAP.get(package_name, package_name)
 
 class NotificationServer(BaseHTTPRequestHandler):
