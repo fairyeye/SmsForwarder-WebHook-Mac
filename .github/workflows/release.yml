@@ -1,0 +1,68 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install rumps py2app pyperclip
+
+    - name: Build application
+      run: |
+        rm -rf build dist
+        python setup.py py2app
+
+    - name: Verify build
+      run: |
+        ls -la dist/
+        echo "---"
+        ls -la dist/*.app/Contents/
+
+    - name: Create DMG installer
+      run: |
+        npm install -g appdmg
+        cat > appdmg.json << 'EOF'
+        {
+          "title": "通知接收器",
+          "icon": "src/sms_forwarder/notification-icon.icns",
+          "background": "none",
+          "contents": [
+            { "x": 192, "y": 344, "type": "file", "path": "dist/通知接收器.app" },
+            { "x": 448, "y": 344, "type": "link", "path": "/Applications" }
+          ]
+        }
+        EOF
+        appdmg appdmg.json dist/通知接收器.dmg
+
+    - name: Get release version
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+    - name: Upload to GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          dist/通知接收器.app.zip
+          dist/通知接收器.dmg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clean up
+      if: always()
+      run: rm -f appdmg.json

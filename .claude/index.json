@@ -1,0 +1,104 @@
+{
+  "timestamp": "2026-03-02T09:42:14+0800",
+  "project_name": "SMS 转发器 WebHook Mac 应用",
+  "description": "一个 macOS 状态栏应用，用于接收和处理来自 Android 设备的短信和应用通知",
+  "language": "Python",
+  "file_count": 5,
+  "total_lines": 300,
+  "covered_lines": 280,
+  "coverage_percentage": 93.3,
+  "modules": [
+    {
+      "name": "main",
+      "file_path": "/Users/li/Develop/CC/0301/SmsForwarder-WebHook-Mac/main.py",
+      "type": "应用入口",
+      "responsibility": "状态栏应用实现，用户交互处理",
+      "entry_point": true,
+      "test_file": null,
+      "dependencies": ["rumps", "pyperclip", "re", "os", "server", "history"],
+      "documents": ["CLAUDE.md", "main.CLAUDE.md"],
+      "lines": 160
+    },
+    {
+      "name": "server",
+      "file_path": "/Users/li/Develop/CC/0301/SmsForwarder-WebHook-Mac/server.py",
+      "type": "服务层",
+      "responsibility": "接收和解析 WebHook 请求",
+      "entry_point": false,
+      "test_file": null,
+      "dependencies": ["http.server", "urllib.parse", "threading", "os"],
+      "documents": ["CLAUDE.md", "server.CLAUDE.md"],
+      "lines": 54
+    },
+    {
+      "name": "history",
+      "file_path": "/Users/li/Develop/CC/0301/SmsForwarder-WebHook-Mac/history.py",
+      "type": "数据层",
+      "responsibility": "通知历史记录的存储和管理",
+      "entry_point": false,
+      "test_file": null,
+      "dependencies": ["json", "os", "datetime"],
+      "documents": ["CLAUDE.md", "history.CLAUDE.md"],
+      "lines": 60
+    },
+    {
+      "name": "setup",
+      "file_path": "/Users/li/Develop/CC/0301/SmsForwarder-WebHook-Mac/setup.py",
+      "type": "配置文件",
+      "responsibility": "py2app 打包配置",
+      "entry_point": false,
+      "test_file": null,
+      "dependencies": ["setuptools"],
+      "documents": ["CLAUDE.md", "setup.CLAUDE.md"],
+      "lines": 27
+    },
+    {
+      "name": "icon",
+      "file_path": "/Users/li/Develop/CC/0301/SmsForwarder-WebHook-Mac/notification-icon.icns",
+      "type": "资源文件",
+      "responsibility": "应用图标",
+      "entry_point": false,
+      "test_file": null,
+      "dependencies": [],
+      "documents": ["CLAUDE.md"],
+      "lines": 0
+    }
+  ],
+  "module_coverage": 100,
+  "dependencies": [
+    {
+      "name": "rumps",
+      "version": "unknown",
+      "type": "第三方库",
+      "description": "macOS 状态栏应用框架"
+    },
+    {
+      "name": "py2app",
+      "version": "unknown",
+      "type": "第三方库",
+      "description": "Python 应用打包工具"
+    },
+    {
+      "name": "pyperclip",
+      "version": "unknown",
+      "type": "第三方库",
+      "description": "剪贴板操作"
+    },
+    {
+      "name": "PyObjC",
+      "version": "unknown",
+      "type": "第三方库",
+      "description": "Python 与 Objective-C 桥接"
+    }
+  ],
+  "test_coverage": 0,
+  "ignored_files": [
+    "build/",
+    "dist/",
+    "__pycache__/",
+    ".DS_Store"
+  ],
+  "truncated": false,
+  "next_scan": null,
+  "notes": "项目已完成架构分析，生成了完整的文档体系，包括项目级 CLAUDE.md 和模块级 CLAUDE.md 文件。"
+}
